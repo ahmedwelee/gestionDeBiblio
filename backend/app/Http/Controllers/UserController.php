@@ -4,13 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use App\Models\BorrowRecord;
+use App\Models\RegistrationRequest;
 use App\Models\Reservation;
+use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\WaitingList;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -44,7 +47,7 @@ class UserController extends Controller
             'password' => 'nullable|string|min:8',
             'role' => 'nullable|in:admin,librarian,user',
             'phone' => 'nullable|string|max:15',
-
+         
 
 
         ]);
@@ -74,20 +77,20 @@ class UserController extends Controller
 
 
     public function updateOwnProfile(Request $request)
-    {
-        $user = $request->user();
+{
+    $user = $request->user();
 
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . $user->id,
-            'phone' => 'nullable|string|max:20',
+    $validated = $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|unique:users,email,' . $user->id,
+        'phone' => 'nullable|string|max:20',
+       
+    ]);
 
-        ]);
+    $user->update($validated);
 
-        $user->update($validated);
-
-        return response()->json($user, 200);
-    }
+    return response()->json($user, 200);
+}
     public function userStats(Request $request)
     {
         $user = $request->user();
@@ -162,3 +165,5 @@ class UserController extends Controller
         ]);
     }
 }
+
+
