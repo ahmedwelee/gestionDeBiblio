@@ -4,6 +4,7 @@ import { Sidebar } from "../../components/user/userDashboard/Sidebar";
 import { StatCard } from "../../components/user/userDashboard/StatCard";
 import { Outlet, useLocation, Link } from "react-router";
 import { useUser } from "../../context/UserContext";
+import { useTheme } from "../../context/ThemeContext";
 import axiosClient from "../../axiosClient";
 
 const initialStats = {
@@ -43,6 +44,7 @@ export function UserDashboardPage() {
   const [stats, setStats] = useState(initialStats);
   const location = useLocation();
   const { user } = useUser();
+  const { isDarkMode } = useTheme();
 
   // Hooks toujours au top level
   useEffect(() => {
@@ -70,17 +72,52 @@ export function UserDashboardPage() {
       case "/dashboard":
         return (
             <>
-              <header className="mb-8 rounded-xl bg-white dark:bg-midnight-card px-6 py-6 shadow-sm dark:shadow-glass-md border border-slate-200 dark:border-midnight-border/30 transition-all duration-500">
-                <div>
-                  <h1 className="text-3xl font-semibold text-slate-900 dark:text-midnight-text transition-colors duration-500">User Dashboard</h1>
-                  <p className="text-base text-slate-600 dark:text-slate-400 transition-colors duration-500">Hello again, welcome to MyLibrary</p>
+              <div className="mb-8">
+                <div className="bg-gradient-to-r from-blue-600 to-blue-700 dark:from-blue-700 dark:to-blue-800 rounded-xl px-8 py-8 shadow-lg text-white">
+                  <h1 className="text-4xl font-bold mb-2">Welcome Back!</h1>
+                  <p className="text-blue-50">Here's your library activity overview</p>
                 </div>
-              </header>
-              <div className={styles.statsGrid}>
-                <StatCard icon="active_loans" title="Active Loans" value={stats.active_loans} color="primary" backgroundColor="#ffffff"/>
-                <StatCard icon="borrowed_books" title="Borrowed Books" value={stats.borrowed_books} color="primary" backgroundColor="#ffffff"/>
-                <StatCard icon="overdue" title="Overdue Books" value={stats.overdue} color="danger" backgroundColor="#ffffff"/>
-                <StatCard icon="reservation_books" title="Reservation Books" value={stats.reservation_books} color="primary" backgroundColor="#ffffff"/>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div className="bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-700/50 rounded-lg p-4">
+                  <p className="text-sm font-medium text-green-600 dark:text-green-400">Active Loans</p>
+                  <p className="text-3xl font-bold text-green-700 dark:text-green-300 mt-2">{stats.active_loans}</p>
+                </div>
+                <div className="bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-700/50 rounded-lg p-4">
+                  <p className="text-sm font-medium text-blue-600 dark:text-blue-400">Total Borrowed</p>
+                  <p className="text-3xl font-bold text-blue-700 dark:text-blue-300 mt-2">{stats.borrowed_books}</p>
+                </div>
+                <div className="bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-700/50 rounded-lg p-4">
+                  <p className="text-sm font-medium text-red-600 dark:text-red-400">Overdue Books</p>
+                  <p className="text-3xl font-bold text-red-700 dark:text-red-300 mt-2">{stats.overdue}</p>
+                </div>
+                <div className="bg-purple-50 dark:bg-purple-900/30 border border-purple-200 dark:border-purple-700/50 rounded-lg p-4">
+                  <p className="text-sm font-medium text-purple-600 dark:text-purple-400">Reservations</p>
+                  <p className="text-3xl font-bold text-purple-700 dark:text-purple-300 mt-2">{stats.reservation_books}</p>
+                </div>
+              </div>
+
+              <div className="bg-white dark:bg-slate-800 rounded-lg p-6 shadow-md">
+                <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-4">Quick Actions</h2>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  <a href="/dashboard/borrowing" className="p-4 bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-700/50 hover:bg-blue-100 dark:hover:bg-blue-900/50 rounded-lg text-center transition-colors">
+                    <p className="text-2xl mb-1">📚</p>
+                    <p className="text-sm font-semibold text-slate-700 dark:text-slate-300">My Books</p>
+                  </a>
+                  <a href="/dashboard/reservations" className="p-4 bg-cyan-50 dark:bg-cyan-900/30 border border-cyan-200 dark:border-cyan-700/50 hover:bg-cyan-100 dark:hover:bg-cyan-900/50 rounded-lg text-center transition-colors">
+                    <p className="text-2xl mb-1">🔖</p>
+                    <p className="text-sm font-semibold text-slate-700 dark:text-slate-300">Reservations</p>
+                  </a>
+                  <a href="/dashboard/overdue-books" className="p-4 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-700/50 hover:bg-red-100 dark:hover:bg-red-900/50 rounded-lg text-center transition-colors">
+                    <p className="text-2xl mb-1">⏰</p>
+                    <p className="text-sm font-semibold text-slate-700 dark:text-slate-300">Overdue</p>
+                  </a>
+                  <a href="/dashboard/history" className="p-4 bg-purple-50 dark:bg-purple-900/30 border border-purple-200 dark:border-purple-700/50 hover:bg-purple-100 dark:hover:bg-purple-900/50 rounded-lg text-center transition-colors">
+                    <p className="text-2xl mb-1">📖</p>
+                    <p className="text-sm font-semibold text-slate-700 dark:text-slate-300">History</p>
+                  </a>
+                </div>
               </div>
             </>
         );
@@ -92,8 +129,15 @@ export function UserDashboardPage() {
   // Render conditionnel seulement ici
   if (!user) return <LoginPrompt />;
 
+  const dashboardStyle = {
+    background: isDarkMode 
+      ? 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%)'
+      : '#f8fafc',
+    transition: 'background 0.3s ease'
+  };
+
   return (
-      <main className={styles.dashboard}>
+      <main className={`${styles.dashboard} ${isDarkMode ? 'dark' : ''}`} style={dashboardStyle}>
         <div className={styles.contentWrapper}>
           <Sidebar activeTab={activeTab} onTabChange={setActiveTab} />
           <section className={styles.mainContent}>{renderContent()}</section>

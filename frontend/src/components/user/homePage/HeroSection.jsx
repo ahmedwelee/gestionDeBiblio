@@ -62,7 +62,7 @@ const HeroSection = () => {
             fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
           }}
         >
-          Welcome to <span className="text-gradient-hero">Gestion Library</span>
+          <span className="text-blue-400">Welcome to</span> <span className="text-gradient-hero">Gestion Library</span>
         </motion.h1>
 
         <motion.p

@@ -4,16 +4,18 @@
   width: 100%;
   background: #f8fafc;
   color-scheme: light;
+  transition: background 0.3s ease;
 }
 
-.dark .dashboard {
-  background: linear-gradient(to bottom, #0f172a, #1e293b, #0f172a);
+.dashboard.dark {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
   color-scheme: dark;
 }
 
 .contentWrapper {
   display: flex;
   min-height: 100vh;
+  background: inherit;
 }
 
 .navbar {
@@ -155,6 +157,7 @@
   flex-direction: column;
   gap: 10px;
   border-right: 1px solid #e2e8f0;
+  transition: background 0.3s ease;
 }
 
 .dark .sidebar {
@@ -202,6 +205,7 @@
   flex: 1;
   padding: 28px;
   overflow-y: auto;
+  background: inherit;
 }
 
 .contentHeader {

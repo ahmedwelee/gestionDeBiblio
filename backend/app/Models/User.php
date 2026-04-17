@@ -31,6 +31,7 @@ class User extends Authenticatable
         'role',
         'gmail',
         'is_active',
+        'language_preference',
     ];
 
     /**

@@ -11,6 +11,7 @@ use App\Http\Controllers\RegistrationRequestController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WaitingListController;
+use App\Http\Controllers\ChatbotController;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
 use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
@@ -117,6 +118,15 @@ Route::prefix('/waitingList')->controller(WaitingListController::class)->name('w
     Route::post('/create', 'store')->name('create');
     Route::get('/user/{id}', 'user')->whereNumber('id')->name('user');
     Route::delete('/{id}', 'destroy')->whereNumber('id')->name('destroy');
+});
+
+// Chatbot routes
+Route::middleware('auth:sanctum')->group(function () {
+    Route::prefix('/chat')->controller(ChatbotController::class)->group(function () {
+        Route::post('/message', 'message')->name('chat.message');
+        Route::post('/language', 'setLanguage')->name('chat.language');
+        Route::get('/context', 'getContext')->name('chat.context');
+    });
 });
 
 

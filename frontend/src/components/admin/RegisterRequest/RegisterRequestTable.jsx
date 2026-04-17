@@ -6,32 +6,18 @@ import { faPencilAlt, faTrash, faPlus, faSearch } from "@fortawesome/free-solid-
 import styles from "../../../LibraryDashboard.module.css";
 
 function RequestTableRow({ index, request, onDelete, onApprove }) {
-  const navigate = useNavigate();
   return (
-    <tr className={`${styles.tableRow} transition-all duration-200`}>
-      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900 dark:text-slate-200 transition-colors duration-500">{index + 1}</td>
-      <td className="text-sm text-slate-900 dark:text-slate-300 font-light px-6 py-4 whitespace-nowrap transition-colors duration-500">{request.name}</td>
-      <td className="text-sm text-slate-900 dark:text-slate-300 font-light px-6 py-4 whitespace-nowrap transition-colors duration-500">{request.gmail}</td>
-      <td className="text-sm text-slate-900 dark:text-slate-300 font-light px-6 py-4 whitespace-nowrap transition-colors duration-500">{request.phone}</td>
-      <td className="text-sm font-medium px-6 py-4 whitespace-nowrap">
-        <div className={styles.actionButtons}>
-        <button
-          onClick={() => onApprove(request.id)}
-            className={`${styles.actionButton} ${styles.approveButton}`}
-            title="Approve request"
-        >
-          <FontAwesomeIcon icon={faPlus} />
-        </button>
-        <button
-          onClick={() => onDelete(request.id)}
-            className={`${styles.actionButton} ${styles.deleteButton}`}
-            title="Delete request"
-        >
-          <FontAwesomeIcon icon={faTrash} />
-        </button>
+    <div className="group flex items-center justify-between px-6 py-4 border-b border-slate-200 dark:border-slate-700/50 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors duration-200">
+      <div className="flex-1 min-w-0 grid grid-cols-4 gap-4">
+        <div><p className="text-sm text-slate-900 dark:text-slate-100">{request.name}</p></div>
+        <div className="hidden sm:block"><p className="text-sm text-slate-600 dark:text-slate-300 truncate">{request.gmail}</p></div>
+        <div><p className="text-sm text-slate-600 dark:text-slate-300">{request.phone}</p></div>
+        <div className="flex items-center justify-end gap-2">
+          <button onClick={() => onApprove(request.id)} className="px-3 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-medium transition-colors duration-200">Approve</button>
+          <button onClick={() => onDelete(request.id)} className="px-3 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-sm font-medium transition-colors duration-200">Delete</button>
         </div>
-      </td>
-    </tr>
+      </div>
+    </div>
   );
 }
 
@@ -128,92 +114,15 @@ export function RequestTable() {
   }
 
   return (
-    <div className={styles.tableContainer}>
-      {successMessage && (
-        <div className="mb-4 p-4 rounded-lg bg-green-50 border-l-4 border-green-400">
-          <p className="text-green-700">{successMessage}</p>
-        </div>
-      )}
-      
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold bg-gradient-to-r from-[#274e79] to-[#1a3b5c] bg-clip-text text-transparent">
-          Requests List
-        </h2>
+    <div className="w-full">
+      {successMessage && (<div className="mb-6 p-4 bg-green-50 dark:bg-green-900/20 border-l-4 border-green-500 rounded-lg"><p className="text-sm text-green-700 dark:text-green-200">{successMessage}</p></div>)}
+      <div className="mb-8"><h1 className="text-3xl font-bold text-slate-900 dark:text-white">Registration Requests</h1><p className="text-slate-600 dark:text-slate-400 mt-1">Manage user registration requests</p></div>
+      <div className="mb-6 flex-1"><div className="relative"><FontAwesomeIcon icon={faSearch} className="absolute left-3 top-3.5 text-slate-400" /><input type="text" value={searchTerm} onChange={handleSearch} className="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500" placeholder="Search requests..." /></div></div>
+      <div className="bg-white dark:bg-slate-800 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
+        <div className="hidden md:grid grid-cols-4 gap-4 px-6 py-4 bg-slate-50 dark:bg-slate-900/50 border-b font-semibold text-sm text-slate-700 dark:text-slate-300"><div>Name</div><div>Email</div><div>Phone</div><div className="text-right">Actions</div></div>
+        <div>{paginatedRequests.length > 0 ? paginatedRequests.map((req) => (<RequestTableRow key={req.id} index={requests.indexOf(req)} request={req} onDelete={handleDelete} onApprove={handleApprove} />)) : (<div className="px-6 py-12 text-center"><p className="text-slate-600 dark:text-slate-400">No requests found</p></div>)}</div>
       </div>
-
-      <div className={styles.tableControls}>
-        <div className="relative">
-          <FontAwesomeIcon icon={faSearch} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-          <input
-            type="text"
-            value={searchTerm}
-            onChange={handleSearch}
-            className={`${styles.searchInput} pl-10`}
-            placeholder="Search requests..."
-          />
-        </div>
-        
-        <div className="flex items-center gap-4">
-          <div className="flex items-center gap-2">
-            <span className="text-gray-600">Show</span>
-          <select
-            value={perPage}
-            onChange={(e) => setPerPage(parseInt(e.target.value))}
-              className={styles.pageButton}
-          >
-            <option value="5">5</option>
-            <option value="10">10</option>
-            <option value="15">15</option>
-            <option value="20">20</option>
-          </select>
-        </div>
-          
-          <div className={styles.pageControls}>
-          <button
-            onClick={() => setPage(page - 1)}
-            disabled={page === 1}
-              className={styles.pageButton}
-          >
-            Previous
-          </button>
-            <span className="text-gray-600">
-            Page {page} of {totalPages}
-          </span>
-          <button
-            onClick={() => setPage(page + 1)}
-            disabled={page === totalPages}
-              className={styles.pageButton}
-          >
-            Next
-          </button>
-        </div>
-      </div>
-      </div>
-
-      <div className="overflow-x-auto rounded-xl">
-        <table className={styles.table}>
-          <thead className="bg-gradient-to-r from-[#274e79] to-[#1a3b5c] text-white">
-            <tr>
-              <th scope="col" className="px-6 py-4 border-r border-white/10 font-semibold text-sm uppercase">#</th>
-              <th scope="col" className="px-6 py-4 border-r border-white/10 font-semibold text-sm uppercase">Name</th>
-              <th scope="col" className="px-6 py-4 border-r border-white/10 font-semibold text-sm uppercase">Gmail</th>
-              <th scope="col" className="px-6 py-4 border-r border-white/10 font-semibold text-sm uppercase">Phone</th>
-              <th scope="col" className="px-6 py-4 font-semibold text-sm uppercase text-right">Actions</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-200">
-            {paginatedRequests.map((request, index) => (
-              <RequestTableRow
-                key={request.id}
-                index={(page - 1) * perPage + index}
-                request={request}
-                onDelete={handleDelete}
-                onApprove={handleApprove}
-              />
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <div className="mt-6 flex justify-between"><div className="text-sm text-slate-600">Showing {Math.min((page - 1) * perPage + 1, filteredRequests.length)} to {Math.min(page * perPage, filteredRequests.length)} of {filteredRequests.length}</div><div className="flex gap-2"><button onClick={() => setPage(page - 1)} disabled={page === 1} className="px-4 py-2 bg-white dark:bg-slate-800 border rounded-lg text-sm font-medium hover:bg-slate-50 disabled:opacity-50">Previous</button><div className="px-4 py-2">Page {page} of {totalPages || 1}</div><button onClick={() => setPage(page + 1)} disabled={page === totalPages || totalPages === 0} className="px-4 py-2 bg-white dark:bg-slate-800 border rounded-lg text-sm font-medium hover:bg-slate-50 disabled:opacity-50">Next</button></div></div>
     </div>
   );
 }

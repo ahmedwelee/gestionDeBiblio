@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styles from "../../../LibraryDashboard.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useTheme } from "../../../context/ThemeContext";
 import {
   faHome,
   faCalendar,
@@ -23,8 +24,15 @@ const navItems = [
 ];
 
 export function Sidebar({ activeTab, onTabChange }) {
+  const { isDarkMode } = useTheme();
+
+  const sidebarStyle = {
+    background: isDarkMode ? '#1e293b' : '#ffffff',
+    transition: 'background 0.3s ease'
+  };
+
   return (
-    <aside className={styles.sidebar}>
+    <aside className={styles.sidebar} style={sidebarStyle}>
       {navItems.map((item) => (
         <Link
           key={item.id}
