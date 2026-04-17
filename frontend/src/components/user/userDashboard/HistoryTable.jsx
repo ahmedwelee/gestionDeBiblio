@@ -15,7 +15,7 @@ function BorrowRecordCard({ borrowRecord }) {
   };
 
   return (
-    <div className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out">
+    <div className="bg-white dark:bg-slate-700 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out">
       <div className="relative">
       <img
           src={`http://localhost:8000/storage/${book.image}`}
@@ -32,12 +32,12 @@ function BorrowRecordCard({ borrowRecord }) {
         <div className="flex items-center justify-between mb-4">
           <span className={`px-3 py-1 rounded-full text-sm font-medium ${
             isReturned 
-            ? 'bg-green-100 text-green-800' 
-            : 'bg-yellow-100 text-yellow-800'
+            ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200' 
+            : 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-200'
           }`}>
             {isReturned ? 'Returned' : 'Not Returned'}
           </span>
-          <span className="text-sm text-gray-600">
+          <span className="text-sm text-gray-600 dark:text-gray-300">
             {isReturned 
               ? `Returned: ${formatDate(borrowRecord.return_date)}`
               : `Due: ${formatDate(borrowRecord.due_date)}`
@@ -46,16 +46,16 @@ function BorrowRecordCard({ borrowRecord }) {
         </div>
         
         <div className="space-y-2">
-          <div className="flex items-center text-gray-600">
+          <div className="flex items-center text-gray-600 dark:text-gray-300">
             <span className="text-sm font-medium w-24">Category:</span>
             <span className="text-sm">{book.category ? book.category.name : '-'}</span>
           </div>
-          <div className="flex items-center text-gray-600">
+          <div className="flex items-center text-gray-600 dark:text-gray-300">
             <span className="text-sm font-medium w-24">Borrowed:</span>
             <span className="text-sm">{formatDate(borrowRecord.borrow_date)}</span>
           </div>
           <div className="mt-3">
-            <p className="text-sm text-gray-600 line-clamp-2">
+            <p className="text-sm text-gray-600 dark:text-gray-300 line-clamp-2">
               {book.description}
             </p>
           </div>
@@ -137,57 +137,79 @@ export function HistoryTable() {
   return (
     <div className="container mx-auto px-4">
       {successMessage && (
-        <div className="p-4 mb-4 text-green-700 bg-green-100 rounded-lg" role="alert">
-          <p>{successMessage}</p>
+        <div className="p-4 mb-6 text-green-700 dark:text-green-200 bg-green-100 dark:bg-green-900/30 border border-green-300 dark:border-green-700/50 rounded-lg font-medium" role="alert">
+          ✓ {successMessage}
         </div>
       )}
-      <div className="flex justify-between items-center py-4">
-        <h2 className="text-2xl font-semibold">History</h2>
+
+      <div className="mb-8">
+        <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Borrow History</h2>
+        <p className="text-slate-600 dark:text-slate-400">View all books you've borrowed</p>
       </div>
-      <div className="flex items-center justify-between py-4">
-        <div className="space-x-2">
-          <input
-            type="text"
-            value={searchTerm}
-            onChange={handleSearch}
-            className="py-2 px-4 border border-gray-300 rounded-md shadow-sm"
-            placeholder="Search..."
-          />
-        </div>
-        <div className="space-x-2">
-          <span className="text-sm">Show</span>
-          <select
-            value={perPage}
-            onChange={(e) => setPerPage(parseInt(e.target.value))}
-            className="py-2 px-4 border border-gray-300 rounded-md shadow-sm"
-          >
-            <option value="5">5</option>
-            <option value="10">10</option>
-            <option value="15">15</option>
-            <option value="20">20</option>
-          </select>
-        </div>
-        <div className="space-x-2">
-          <button
-            onClick={() => setPage(page - 1)}
-            className="py-2 px-4 border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 disabled:opacity-50"
-            disabled={page === 1}
-          >
-            Previous
-          </button>
-          <span className="text-sm">
-            Page {page} of {totalPages}
-          </span>
-          <button
-            onClick={() => setPage(page + 1)}
-            className="py-2 px-4 border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 disabled:opacity-50"
-            disabled={page === totalPages}
-          >
-            Next
-          </button>
+
+      <div className="bg-purple-50 dark:bg-purple-900/20 border-l-4 border-purple-500 p-4 mb-6 rounded">
+        <p className="text-purple-700 dark:text-purple-200 font-semibold">
+          📚 Total history: {filteredBorrowRecords.length} record{filteredBorrowRecords.length > 1 ? 's' : ''}
+        </p>
+      </div>
+
+      <div className="bg-white dark:bg-slate-800 rounded-lg shadow-md p-4 mb-6 space-y-4 md:space-y-0">
+        <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
+          <div className="flex-1">
+            <input
+              type="text"
+              value={searchTerm}
+              onChange={handleSearch}
+              className="w-full py-2 px-4 border border-gray-300 dark:border-slate-600 rounded-lg shadow-sm bg-white dark:bg-slate-700 text-slate-900 dark:text-white placeholder-gray-400 dark:placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-400"
+              placeholder="Search by title, author, or category..."
+            />
+          </div>
+
+          <div className="flex items-center space-x-2">
+            <span className="text-sm text-slate-700 dark:text-slate-300 font-medium">Show</span>
+            <select
+              value={perPage}
+              onChange={(e) => setPerPage(parseInt(e.target.value))}
+              className="py-2 px-3 border border-gray-300 dark:border-slate-600 rounded-lg shadow-sm bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-400"
+            >
+              <option value="5">5</option>
+              <option value="10">10</option>
+              <option value="15">15</option>
+              <option value="20">20</option>
+            </select>
+          </div>
+
+          <div className="flex items-center space-x-2">
+            <button
+              onClick={() => setPage(page - 1)}
+              className="py-2 px-4 border border-gray-300 dark:border-slate-600 rounded-lg shadow-sm bg-white dark:bg-slate-700 hover:bg-gray-50 dark:hover:bg-slate-600 disabled:opacity-50 disabled:cursor-not-allowed text-slate-900 dark:text-white transition-colors"
+              disabled={page === 1}
+            >
+              ← Prev
+            </button>
+            <span className="text-sm text-slate-700 dark:text-slate-300 font-medium whitespace-nowrap">
+              {page} / {totalPages || 1}
+            </span>
+            <button
+              onClick={() => setPage(page + 1)}
+              className="py-2 px-4 border border-gray-300 dark:border-slate-600 rounded-lg shadow-sm bg-white dark:bg-slate-700 hover:bg-gray-50 dark:hover:bg-slate-600 disabled:opacity-50 disabled:cursor-not-allowed text-slate-900 dark:text-white transition-colors"
+              disabled={page === totalPages || totalPages === 0}
+            >
+              Next →
+            </button>
+          </div>
         </div>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+
+      {paginatedBorrowRecords.length === 0 && (
+        <div className="text-center py-16">
+          <div className="text-6xl mb-4">📖</div>
+          <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">No History Yet</h3>
+          <p className="text-slate-600 dark:text-slate-400 text-lg">You haven't borrowed any books yet</p>
+        </div>
+      )}
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {paginatedBorrowRecords.map((borrowRecord, index) => (
           <BorrowRecordCard key={borrowRecord.id} borrowRecord={borrowRecord} />
         ))}

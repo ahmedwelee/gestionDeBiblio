@@ -2,6 +2,7 @@ import React from "react";
 import styles from "../../../LibraryDashboard.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserGraduate, faBookOpen, faCalendarCheck, faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
+import { useTheme } from "../../../context/ThemeContext";
 
 const iconMap = {
   active_loans: <FontAwesomeIcon icon={faUserGraduate} />,
@@ -11,12 +12,16 @@ const iconMap = {
 };
 
 export function StatCard({ icon, title, value, color = "primary", backgroundColor }) {
+  const { isDarkMode } = useTheme();
   const getIcon = () => iconMap[icon] || null;
   const formattedValue =
     typeof value === "number" ? value.toLocaleString() : "0";
 
+  // Use dark mode background if dark mode is on
+  const cardBackgroundColor = isDarkMode ? "#1e293b" : backgroundColor;
+
   return (
-    <div className={styles.statCard} style={{ backgroundColor }}>
+    <div className={styles.statCard} style={{ backgroundColor: cardBackgroundColor }}>
       <div className={styles.statContent}>
         <div className={`${styles.iconWrapper} ${styles[`icon${color}`]}`}>
           {getIcon()}

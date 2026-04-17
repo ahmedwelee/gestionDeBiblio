@@ -63,138 +63,124 @@ const UserEditForm = ({ onSubmit }) => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-50/50 py-6">
-            <div className="max-w-2xl mx-auto">
-                <form onSubmit={handleSubmit} className="backdrop-blur-xl bg-white/60 shadow-xl rounded-3xl p-8 border border-gray-100">
-                    <header className="flex justify-between items-center mb-8 border-b border-gray-100 pb-6">
-                        <div>
-                            <h2 className="text-3xl font-bold bg-gradient-to-r from-[#274e79] to-[#1a3b5c] bg-clip-text text-transparent">
-                                Edit User
-                            </h2>
-                            <p className="text-gray-500 mt-1">Update user information</p>
-                        </div>
-                        <Link 
-                            to="/admin/dashboard/users" 
-                            className="p-2 hover:bg-gray-100 rounded-full transition-all duration-200 hover:scale-105"
-                        >
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-600" viewBox="0 0 20 20" fill="currentColor">
-                                                       <path fillRule="evenodd" d="M10.293 2.293a1 1 0 011.414 0l8 8a1 1 0 010 1.414l-8 8a1 1 0 01-1.414-1.414L16.586 11H3a1 1 0 110-2h13.586l-6.293-6.293a1 1 0 010-1.414z" clipRule="evenodd" />
-                                                   </svg>
-                                               </Link>
-            </header>
-
-                    <div className="space-y-6">
-                        {loading && (
-                            <div className="flex items-center justify-center py-4 bg-white/80 rounded-xl backdrop-blur">
-                                <div className="inline-block animate-spin rounded-full h-8 w-8 border-[3px] border-current border-t-transparent text-[#274e79] transition-colors duration-200"></div>
-                                <p className="ml-3 text-[#274e79] font-medium">Processing...</p>
-                            </div>
-                        )}
-
-                        {error && (
-                            <div className="bg-red-50/50 backdrop-blur border-l-4 border-red-400 p-4 rounded-lg">
-                                <p className="text-red-700 text-sm">{error}</p>
-                            </div>
-                        )}
-
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div className="relative">
-                                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-                                <div className="relative group">
-                                    <div className="absolute -inset-0.5 bg-gradient-to-r from-[#274e79] to-[#1a3b5c] rounded-lg blur opacity-0 group-hover:opacity-20 transition duration-200"></div>
-                    <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        required
-                                        className="relative w-full px-4 py-3 rounded-lg border border-gray-300 bg-white/70 backdrop-blur focus:bg-white focus:ring-2 focus:ring-[#274e79] focus:border-transparent transition duration-200"
-                                        placeholder="Enter full name"
-                    />
+        <div className="w-full">
+            <div className="mb-8 flex items-center justify-between">
+                <div>
+                    <h1 className="text-3xl font-bold text-slate-900 dark:text-white">Edit User</h1>
+                    <p className="text-slate-600 dark:text-slate-400 mt-1">Update user information</p>
                 </div>
-                            </div>
-
-                            <div className="relative">
-                                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
-                                <div className="relative group">
-                                    <div className="absolute -inset-0.5 bg-gradient-to-r from-[#274e79] to-[#1a3b5c] rounded-lg blur opacity-0 group-hover:opacity-20 transition duration-200"></div>
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        required
-                                        className="relative w-full px-4 py-3 rounded-lg border border-gray-300 bg-white/70 backdrop-blur focus:bg-white focus:ring-2 focus:ring-[#274e79] focus:border-transparent transition duration-200"
-                                        placeholder="Enter email address"
-                    />
-                </div>
-                </div>
-
-                            <div className="relative">
-                                <label htmlFor="role" className="block text-sm font-medium text-gray-700 mb-1">Role</label>
-                                <div className="relative group">
-                                    <div className="absolute -inset-0.5 bg-gradient-to-r from-[#274e79] to-[#1a3b5c] rounded-lg blur opacity-0 group-hover:opacity-20 transition duration-200"></div>
-                    <select
-                        id="role"
-                        name="role"
-                        value={formData.role}
-                        onChange={handleChange}
-                        required
-                                        className="relative w-full px-4 py-3 rounded-lg border border-gray-300 bg-white/70 backdrop-blur focus:bg-white focus:ring-2 focus:ring-[#274e79] focus:border-transparent transition duration-200"
-                    >
-                        <option value="">Select role</option>
-                        <option value="admin">Admin</option>
-                        <option value="librarian">Librarian</option>
-                        <option value="user">User</option>
-                    </select>
-                </div>
-                            </div>
-
-                            <div className="relative">
-                                <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
-                                <div className="relative group">
-                                    <div className="absolute -inset-0.5 bg-gradient-to-r from-[#274e79] to-[#1a3b5c] rounded-lg blur opacity-0 group-hover:opacity-20 transition duration-200"></div>
-                                    <input
-                                        type="text"
-                                        id="phone"
-                                        name="phone"
-                                        value={formData.phone}
-                                        onChange={handleChange}
-                                        required
-                                        className="relative w-full px-4 py-3 rounded-lg border border-gray-300 bg-white/70 backdrop-blur focus:bg-white focus:ring-2 focus:ring-[#274e79] focus:border-transparent transition duration-200"
-                                        placeholder="Enter phone number"
-                                    />
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="flex justify-end pt-6">
-                            <button
-                                type="submit"
-                                disabled={loading}
-                                className="relative inline-flex items-center px-6 py-3 overflow-hidden text-white rounded-xl group bg-gradient-to-r from-[#274e79] to-[#1a3b5c] hover:from-[#1a3b5c] hover:to-[#274e79] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-                            >
-                                <span className="absolute right-0 w-8 h-32 -mt-12 transition-all duration-1000 transform translate-x-12 bg-white opacity-10 rotate-12 group-hover:-translate-x-40 ease"></span>
-                                {loading ? (
-                                    <>
-                                        <div className="animate-spin rounded-full h-5 w-5 border-2 border-white/80 border-t-transparent"></div>
-                                        <span className="ml-2">Updating User...</span>
-                                    </>
-                                ) : (
-                                    <>
-                                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-                                        </svg>
-                                        <span className="ml-2">Update User</span>
-                                    </>
-                                )}
-                </button>
-                        </div>
-                    </div>
-            </form>
+                <Link 
+                    to="/admin/dashboard/users" 
+                    className="px-4 py-2 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-900 dark:text-white rounded-lg font-medium transition-colors duration-200"
+                >
+                    ← Back
+                </Link>
             </div>
+
+            <form onSubmit={handleSubmit} className="bg-white dark:bg-slate-800 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700 p-8">
+
+                {loading && (
+                    <div className="mb-6 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg flex items-center gap-3">
+                        <div className="animate-spin rounded-full h-5 w-5 border-2 border-blue-500 border-t-transparent"></div>
+                        <p className="text-sm font-medium text-blue-700 dark:text-blue-300">Processing...</p>
+                    </div>
+                )}
+
+                {error && (
+                    <div className="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border-l-4 border-red-500 rounded-lg">
+                        <p className="text-red-700 dark:text-red-200 text-sm font-medium">{error}</p>
+                    </div>
+                )}
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    {/* Name */}
+                    <div>
+                        <label htmlFor="name" className="block text-sm font-medium text-slate-900 dark:text-slate-100 mb-2">Full Name</label>
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            value={formData.name}
+                            onChange={handleChange}
+                            required
+                            className="w-full px-4 py-2.5 bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                            placeholder="Enter full name"
+                        />
+                    </div>
+
+                    {/* Email */}
+                    <div>
+                        <label htmlFor="email" className="block text-sm font-medium text-slate-900 dark:text-slate-100 mb-2">Email Address</label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            required
+                            className="w-full px-4 py-2.5 bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                            placeholder="Enter email address"
+                        />
+                    </div>
+
+                    {/* Role */}
+                    <div>
+                        <label htmlFor="role" className="block text-sm font-medium text-slate-900 dark:text-slate-100 mb-2">Role</label>
+                        <select
+                            id="role"
+                            name="role"
+                            value={formData.role}
+                            onChange={handleChange}
+                            required
+                            className="w-full px-4 py-2.5 bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                        >
+                            <option value="">Select role</option>
+                            <option value="admin">Admin</option>
+                            <option value="librarian">Librarian</option>
+                            <option value="user">User</option>
+                        </select>
+                    </div>
+
+                    {/* Phone */}
+                    <div>
+                        <label htmlFor="phone" className="block text-sm font-medium text-slate-900 dark:text-slate-100 mb-2">Phone Number</label>
+                        <input
+                            type="text"
+                            id="phone"
+                            name="phone"
+                            value={formData.phone}
+                            onChange={handleChange}
+                            required
+                            className="w-full px-4 py-2.5 bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                            placeholder="Enter phone number"
+                        />
+                    </div>
+                </div>
+
+                {/* Submit Button */}
+                <div className="flex justify-end gap-3 pt-4 border-t border-slate-200 dark:border-slate-700">
+                    <Link
+                        to="/admin/dashboard/users"
+                        className="px-6 py-2.5 bg-slate-100 dark:bg-slate-700/50 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg font-semibold transition-all duration-200 hover:shadow-md"
+                    >
+                        Cancel
+                    </Link>
+                    <button
+                        type="submit"
+                        disabled={loading}
+                        className="px-8 py-2.5 bg-green-600 hover:bg-green-700 active:bg-green-800 disabled:bg-green-400 disabled:cursor-not-allowed text-white rounded-lg font-semibold transition-all duration-200 shadow-md hover:shadow-lg"
+                    >
+                        {loading ? (
+                            <>
+                                <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent inline-block mr-2"></div>
+                                Updating...
+                            </>
+                        ) : (
+                            'Update User'
+                        )}
+                    </button>
+                </div>
+            </form>
         </div>
     );
 };

@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "../../LibraryDashboard.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useTheme } from "../../context/ThemeContext";
 import { faUser, faBook, faCalendar, faExclamationTriangle, faFolderOpen } from "@fortawesome/free-solid-svg-icons";
 
 const iconMap = {
@@ -13,13 +14,16 @@ const iconMap = {
 };
 
 export function StatCard({ icon, title, value, color = "primary", backgroundColor }) {
+  const { isDarkMode } = useTheme();
   const getIcon = () => iconMap[icon] || null;
 
   const formattedValue =
     typeof value === "number" ? value.toLocaleString() : "0";
 
+  const cardBackgroundColor = isDarkMode ? "#1e293b" : backgroundColor;
+
   return (
-    <div style={{ backgroundColor }} className={styles.statCard}>
+    <div style={{ backgroundColor: cardBackgroundColor }} className={styles.statCard}>
       <div className={styles.statContent}>
         <div className={`${styles.iconWrapper} ${styles[`icon${color}`]}`}>
           {getIcon()}
