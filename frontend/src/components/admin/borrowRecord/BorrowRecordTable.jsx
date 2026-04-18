@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axiosClient from "../../../axiosClient";
+import { getImageUrl } from "../../../utils/imageHelper";
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faPencilAlt, faTrash } from "@fortawesome/free-solid-svg-icons";
@@ -41,7 +42,7 @@ function BorrowRecordCard({ borrowRecord, onDelete }) {
     <div className="bg-white dark:bg-midnight-card rounded-xl overflow-hidden shadow-lg dark:shadow-glass-lg hover:shadow-xl dark:hover:shadow-glass-xl transition-shadow duration-300 ease-in-out border border-slate-200 dark:border-midnight-border">
       <div className="relative">
         <img
-          src={`http://localhost:8000/storage/${book.image}`}
+          src={getImageUrl(book.image)}
           alt={book.title}
           className="h-64 w-full object-cover transform hover:scale-105 transition-transform duration-300"
         />

@@ -8,6 +8,7 @@ import BooksByCategory from './BooksByCategory';
 import { useUser } from '../../../context/UserContext';
 import ReservationForm from './ConfirmReservation';
 import axiosClient from '../../../axiosClient';
+import { getImageUrl } from '../../../utils/imageHelper';
 import moment from 'moment';
 
 const BookDetail = () => {
@@ -175,12 +176,12 @@ const BookDetail = () => {
            transition={{ duration: 0.5 }}
            className="w-full md:w-1/3 relative overflow-hidden cursor-pointer"
          >
-           {book.image && (
-             <img
-               src={`http://localhost:8000/storage/${book.image}`}
-               alt={book.title}
-               className="w-full h-80 object-cover rounded-2xl shadow-lg transition-all duration-300"
-               onMouseMove={handleMouseEnter}
+            {book.image && (
+              <img
+                src={getImageUrl(book.image)}
+                alt={book.title}
+                className="w-full h-80 object-cover rounded-2xl shadow-lg transition-all duration-300"
+                onMouseMove={handleMouseEnter}
                onMouseLeave={handleMouseLeave}
                onClick={openImageModal}
              />
@@ -275,12 +276,12 @@ const BookDetail = () => {
       <ToastContainer />
       {isImageModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 z-50">
-          <div className="relative">
-            <img
-              src={`http://localhost:8000/storage/${book.image}`}
-              alt={book.title}
-              className="w-full h-auto max-w-lg rounded-lg shadow-lg"
-            />
+           <div className="relative">
+             <img
+               src={getImageUrl(book.image)}
+               alt={book.title}
+               className="w-full h-auto max-w-lg rounded-lg shadow-lg"
+             />
             <button
               onClick={closeImageModal}
               className="absolute top-2 right-2 text-white bg-red-500 rounded-full p-2 hover:bg-red-600 transition duration-300"

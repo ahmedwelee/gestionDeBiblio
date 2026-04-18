@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import axiosClient from '../../../axiosClient';
+import { getImageUrl } from '../../../utils/imageHelper';
 
 const Search = () => {
   const [query, setQuery] = useState('');
@@ -86,7 +87,7 @@ const Search = () => {
                     >
                       {book.image && (
                         <img
-                          src={`http://localhost:8000/storage/${book.image}`}
+                          src={getImageUrl(book.image)}
                           alt={book.title}
                           className="w-16 h-24 object-cover rounded-xl shadow-sm group-hover:scale-105 transition-transform"
                         />

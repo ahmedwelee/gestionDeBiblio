@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import axiosClient from "../../../axiosClient";
 import styles from "../../../LibraryDashboard.module.css";
+import { getImageUrl } from "../../../utils/imageHelper";
 
 export default function BookEditForm() {
     const { id } = useParams();
@@ -239,7 +240,7 @@ export default function BookEditForm() {
                                 {image && <img src={URL.createObjectURL(image)} alt="preview" className="mt-4 h-32 w-32 object-cover rounded-lg" />}
                     {!image && existingImage && (
                         <img
-                            src={`${import.meta.env.VITE_API_BASE_URL}/storage/${existingImage}`}
+                            src={getImageUrl(existingImage)}
                             alt="Current"
                                         className="mt-4 h-32 w-32 object-cover rounded-lg"
                         />

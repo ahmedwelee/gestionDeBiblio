@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { BookOpen } from 'lucide-react';
+import { getImageUrl } from '../../utils/imageHelper';
 
 const BookCard = ({ book, index = 0, variant = 'default' }) => {
   const containerVariants = {
@@ -54,7 +55,7 @@ const BookCard = ({ book, index = 0, variant = 'default' }) => {
           >
             {book.image ? (
               <motion.img
-                src={`http://localhost:8000/storage/${book.image}`}
+                src={getImageUrl(book.image)}
                 alt={book.title}
                 className="w-full h-full object-cover"
                 whileHover={{ scale: 1.08 }}
@@ -137,7 +138,7 @@ const BookCard = ({ book, index = 0, variant = 'default' }) => {
           >
             {book.image ? (
               <img
-                src={`http://localhost:8000/storage/${book.image}`}
+                src={getImageUrl(book.image)}
                 alt={book.title}
                 className="w-full h-full object-cover transition-transform duration-300"
               />
