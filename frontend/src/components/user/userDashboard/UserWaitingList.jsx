@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axiosClient from "../../../axiosClient";
+import { getImageUrl } from "../../../utils/imageHelper";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useUser } from "../../../context/UserContext";
@@ -17,7 +18,7 @@ function WaitingListCard({ waitingList, onDelete }) {
       {/* Image Section */}
       <div className="relative h-64 overflow-hidden bg-gradient-to-br from-slate-200 to-slate-300 dark:from-slate-600 dark:to-slate-800">
         <img
-          src={`http://localhost:8000/storage/${waitingList.book.image}`}
+          src={getImageUrl(waitingList.book.image)}
           alt={waitingList.book.title}
           className="h-full w-full object-cover transform group-hover:scale-110 transition-transform duration-300"
         />

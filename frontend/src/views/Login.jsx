@@ -63,7 +63,7 @@ function Login() {
       <div className={`${styles.loginContainer} bg-white dark:bg-midnight-card w-full max-w-md rounded-2xl shadow-lg dark:shadow-glass-lg p-8 md:p-10 space-y-6 border border-slate-200 dark:border-midnight-border/30 transition-all duration-500`}>
         <header className="text-center space-y-3 mb-8">
           <img
-            src="https://images.pexels.com/photos/16420235/pexels-photo-16420235.jpeg"
+            src="https://static.vecteezy.com/system/resources/previews/013/579/783/large_2x/doing-his-research-in-library-concentrated-young-man-reading-book-while-sitting-against-bookshelf-free-photo.JPG"
             alt="Library Management System"
             className="w-32 h-32 mx-auto rounded-full object-cover shadow-md border-4 border-white dark:border-midnight-card"
           />

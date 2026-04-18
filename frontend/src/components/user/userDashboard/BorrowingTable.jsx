@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useUser } from "../../../context/UserContext";
 import { format } from "date-fns";
+import { getImageUrl } from "../../../utils/imageHelper";
 
 function BorrowRecordCard({ borrowRecord }) {
   const { book } = borrowRecord;
@@ -49,7 +50,7 @@ function BorrowRecordCard({ borrowRecord }) {
     <div className={`bg-white dark:bg-slate-700 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 ease-in-out hover:scale-105 group border-l-4 ${isOverdue ? 'border-red-500' : 'border-green-500'}`}>
       <div className="relative h-64 overflow-hidden bg-gradient-to-br from-slate-200 to-slate-300 dark:from-slate-600 dark:to-slate-800">
         <img
-          src={`http://localhost:8000/storage/${book.image}`}
+          src={getImageUrl(book.image)}
           alt={book.title}
           className="h-full w-full object-cover transform group-hover:scale-110 transition-transform duration-300"
         />

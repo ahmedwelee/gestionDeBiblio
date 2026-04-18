@@ -82,7 +82,7 @@ class BookController extends Controller
             if ($imagePath) {
                 Storage::disk('public')->delete($imagePath);
             }
-            $imagePath = $request->file('image')->store('images/books', 'public');
+            $imagePath = $request->file('image')->store('images/books', ['disk' => 'public']);
         }
 
         $data['image'] = $imagePath;

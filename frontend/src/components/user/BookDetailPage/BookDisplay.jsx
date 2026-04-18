@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FaSpinner, FaBookOpen } from 'react-icons/fa';
 import axiosClient from '../../../axiosClient';
+import { getImageUrl } from '../../../utils/imageHelper';
 
 const BookDisplay = () => {
   const [books, setBooks] = useState([]);
@@ -146,7 +147,7 @@ const BookDisplay = () => {
                   >
                     <div className="relative">
                       <img
-                        src={`http://localhost:8000/storage/${book.image}`}
+                        src={getImageUrl(book.image)}
                         alt={book.title}
                         className="h-64 w-full object-cover transform hover:scale-105 transition-transform duration-300"
                       />

@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axiosClient from "../../../axiosClient";
+import { getImageUrl } from "../../../utils/imageHelper";
 import { useUser } from "../../../context/UserContext";
 import moment from "moment";
 import { format } from "date-fns";
@@ -27,7 +28,7 @@ function BorrowRecordCard({ borrowRecord }) {
       {/* Image Section */}
       <div className={`relative h-64 overflow-hidden bg-gradient-to-br ${urgency.color}`}>
         <img
-          src={`http://localhost:8000/storage/${borrowRecord.book.image}`}
+          src={getImageUrl(borrowRecord.book.image)}
           alt={borrowRecord.book.title}
           className="h-full w-full object-cover transform group-hover:scale-110 transition-transform duration-300 opacity-80 group-hover:opacity-100"
         />

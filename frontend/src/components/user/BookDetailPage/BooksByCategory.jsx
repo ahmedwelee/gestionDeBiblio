@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import axiosClient from '../../../axiosClient';
+import { getImageUrl } from '../../../utils/imageHelper';
 
 const BooksByCategory = ({ categoryId, currentBookId }) => {
   const [allBooks, setAllBooks] = useState([]);
@@ -64,7 +65,7 @@ const BooksByCategory = ({ categoryId, currentBookId }) => {
         {filteredBooks.slice(0, visibleCount).map((book) => (
           <div key={book.id} className="bg-white rounded-lg shadow-lg overflow-hidden">
             <img
-              src={`http://localhost:8000/storage/${book.image}`}
+              src={getImageUrl(book.image)}
               alt={book.title}
               className="w-full h-36 object-cover"
             />
